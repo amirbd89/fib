@@ -155,6 +155,7 @@ public class FibonacciHeap
     */
     public class HeapNode{
   	public HeapNode(int key) {
+		
       }
     }
 }
