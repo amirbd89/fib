@@ -5,6 +5,7 @@
  */
 public class FibonacciHeap
 {
+	private HeapNode min;
 	/**
 	 * public boolean empty()
 	 *
