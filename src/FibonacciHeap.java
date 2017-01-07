@@ -19,9 +19,6 @@ public class FibonacciHeap
     	return false; // should be replaced by student code
     }
 		
-	// TODO - delete this comment
-	// TODO - delete this comment
-	// NOT THE ONE BELOW! 
    /**
     * public HeapNode insert(int key)
     *
