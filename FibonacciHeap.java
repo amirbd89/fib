@@ -28,17 +28,16 @@ public class FibonacciHeap
 	 */
 	public HeapNode insert(int key)
 	{    
-		// TODO - should I verify it's indeed a positive number?
 		HeapNode node = new HeapNode(key);
 		numOfNodes++;
-		if(this.min == null){ // Heap is empty
+		if(this.min == null){ 
 			this.min = node;
 			return node;
 		}
 		cat(node, this.min);
 		if(this.min.getKey()>node.getKey())
 			this.min = node;
-		return node; // should be replaced by student code
+		return node; 
 	}
 
 	/**
@@ -138,9 +137,71 @@ public class FibonacciHeap
 	 * The function decreases the key of the node x by delta. The structure of the heap should be updated
 	 * to reflect this chage (for example, the cascading cuts procedure should be applied if needed).
 	 */
-	public void decreaseKey(HeapNode x, int delta)
+	public void decreaseKey(HeapNode x, int delta) 
 	{    
-		return; // should be replaced by student code
+		x.setKey(x.getKey()-delta);
+		HeapNode p = x.getP();
+		if(p != null && x.getKey() < p.getKey()){
+			cut(x);
+			cascadingcut(p);
+		}
+		if(x.getKey() < this.min.getKey())
+			this.min = x;
+	}
+
+	/**
+	 * cut as was studied in class
+	 */
+	private void cut(HeapNode x){
+		removeFromList(x);
+		cat(this.min,x);
+		x.setMark(false);
+	}
+
+	/**
+	 * private void removeFromList(HeapNode x)
+	 * Takes x out of the list where it is right now
+	 * makes x.right=x.left=x
+	 * Fixes it's parent's degree(if there is a parent)
+	 * Makes x's parent null
+	 * !! May change the parent's child
+	 * even if it's child is not x !!
+	 * @pre: x isn't null
+	 */
+	private void removeFromList(HeapNode x)
+	{
+		HeapNode p = x.getP();
+		x.setP(null);
+		HeapNode r = x.getR();
+		HeapNode l = x.getL();
+		if(r != x){ // x isn't alone in the list
+			r.setL(l);
+			l.setR(r);
+			x.setR(x);
+			x.setL(x);
+		} else { // x is alone in the list.
+			r = null;
+		}
+		if(p != null){
+			// change p's child to r.
+			// if only x was in the list
+			// then r is null (see the "else"
+			// above)
+			p.setChild(r);
+			p.decDegree();
+		}
+	}
+
+	private void cascadingcut(HeapNode y){
+		HeapNode p = y.getP();
+		if(p != null){
+			if (!y.isMark()){
+				y.setMark(true);
+			} else {
+				cut(y);
+				cascadingcut(p);
+			}
+		}
 	}
 
 	/**
@@ -306,6 +367,40 @@ public class FibonacciHeap
 		 */
 		public void setMark(boolean mark) {
 			this.mark = mark;
+		}
+		
+		/**
+		 * decreases degree by 1;
+		 * returns the new degree
+		 */
+		public int decDegree(){
+			return decDegree(1);
+		}
+
+		/**
+		 * increases degree by 1;
+		 * returns the new degree
+		 */
+		public int incDegree(){
+			return incDegree(1);
+		}
+
+		/**
+		 * decreases degree by n;
+		 * returns the new degree
+		 */
+		public int decDegree(int n){
+			setDegree(getDegree()-n);
+			return this.degree;
+		}
+
+		/**
+		 * increases degree by n;
+		 * returns the new degree
+		 */
+		public int incDegree(int n){
+			setDegree(getDegree()+n);
+			return this.degree;
 		}
 	}
 }
