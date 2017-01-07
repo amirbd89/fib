@@ -153,8 +153,14 @@ public class FibonacciHeap
 	 *  
 	 */
 	public class HeapNode{
+		private int info;
+		private int key;
+		private HeapNode L;
+		private HeapNode R;
+		private HeapNode P; // Parent
+		private int rank;
 		public HeapNode(int key) {
-
+						
 		}
 	}
 }
