@@ -5,6 +5,8 @@
  */
 public class FibonacciHeap
 {
+	private HeapNode min;
+	private int numOfNodes=0;
 	/**
 	 * public boolean empty()
 	 *
@@ -16,7 +18,7 @@ public class FibonacciHeap
 	 */
 	public boolean empty()
 	{
-		return false; // should be replaced by student code
+		return this.min == null; // should be replaced by student code
 	}
 
 	/**
@@ -26,7 +28,35 @@ public class FibonacciHeap
 	 */
 	public HeapNode insert(int key)
 	{    
-		return new HeapNode(); // should be replaced by student code
+		// TODO - should I verify it's indeed a positive number?
+		HeapNode node = new HeapNode(key);
+		numOfNodes++;
+		if(this.min == null){ // Heap is empty
+			this.min = node;
+			return node;
+		}
+		cat(node, this.min);
+		if(this.min.getKey()>node.getKey())
+			this.min = node;
+		return node; // should be replaced by student code
+	}
+
+	/**
+	 * gets 2 nodes, x and y, and concats their lists
+	 * !!doesn't handle parents, rank, whatsoever,
+	 * just right and left !!
+	 * x and y are allowed to be null,
+	 * in that case nothing is done.
+	 */
+	private void cat(HeapNode x, HeapNode y){
+		if(x == null || y == null)
+			return;
+		HeapNode lastX = x.getL();
+		HeapNode lastY = y.getL();
+		lastX.setR(y);
+		y.setL(lastX);
+		lastY.setR(x);
+		x.setL(lastY);
 	}
 
 	/**
@@ -153,28 +183,26 @@ public class FibonacciHeap
 	 *  
 	 */
 	public class HeapNode{
-		private int info;
 		private int key;
 		private HeapNode L;
 		private HeapNode R;
 		private HeapNode P; // Parent
+		private HeapNode child; 
 		private int degree;
+		private boolean mark;
+		/**
+		 * public HeapNode(int key)
+		 *
+		 * makes a new heap node, ready to be inserted
+		 * into the root list
+		 * R and L are by default pointing to itself
+		 */
 		public HeapNode(int key) {
-						
-		}
-
-		/**
-		 * @return the info
-		 */
-		public int getInfo() {
-			return info;
-		}
-
-		/**
-		 * @param info the info to set
-		 */
-		public void setInfo(int info) {
-			this.info = info;
+			setKey(key);
+			setL(this);
+			setR(this);
+			setDegree(0);
+			setMark(false);
 		}
 
 		/**
@@ -234,6 +262,20 @@ public class FibonacciHeap
 		}
 
 		/**
+		 * @return the child
+		 */
+		public HeapNode getChild() {
+			return child;
+		}
+
+		/**
+		 * @param child the child to set
+		 */
+		public void setChild(HeapNode child) {
+			this.child = child;
+		}
+
+		/**
 		 * @return the degree
 		 */
 		public int getDegree() {
@@ -245,6 +287,20 @@ public class FibonacciHeap
 		 */
 		public void setDegree(int degree) {
 			this.degree = degree;
+		}
+
+		/**
+		 * @return the mark
+		 */
+		public boolean isMark() {
+			return mark;
+		}
+
+		/**
+		 * @param mark the mark to set
+		 */
+		public void setMark(boolean mark) {
+			this.mark = mark;
 		}
 	}
 }
