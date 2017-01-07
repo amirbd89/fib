@@ -158,9 +158,93 @@ public class FibonacciHeap
 		private HeapNode L;
 		private HeapNode R;
 		private HeapNode P; // Parent
-		private int rank;
+		private int degree;
 		public HeapNode(int key) {
 						
+		}
+
+		/**
+		 * @return the info
+		 */
+		public int getInfo() {
+			return info;
+		}
+
+		/**
+		 * @param info the info to set
+		 */
+		public void setInfo(int info) {
+			this.info = info;
+		}
+
+		/**
+		 * @return the key
+		 */
+		public int getKey() {
+			return key;
+		}
+
+		/**
+		 * @param key the key to set
+		 */
+		public void setKey(int key) {
+			this.key = key;
+		}
+
+		/**
+		 * @return the l
+		 */
+		public HeapNode getL() {
+			return L;
+		}
+
+		/**
+		 * @param l the l to set
+		 */
+		public void setL(HeapNode l) {
+			L = l;
+		}
+
+		/**
+		 * @return the r
+		 */
+		public HeapNode getR() {
+			return R;
+		}
+
+		/**
+		 * @param r the r to set
+		 */
+		public void setR(HeapNode r) {
+			R = r;
+		}
+
+		/**
+		 * @return the p
+		 */
+		public HeapNode getP() {
+			return P;
+		}
+
+		/**
+		 * @param p the p to set
+		 */
+		public void setP(HeapNode p) {
+			P = p;
+		}
+
+		/**
+		 * @return the degree
+		 */
+		public int getDegree() {
+			return degree;
+		}
+
+		/**
+		 * @param degree the degree to set
+		 */
+		public void setDegree(int degree) {
+			this.degree = degree;
 		}
 	}
 }
