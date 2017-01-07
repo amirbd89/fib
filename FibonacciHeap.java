@@ -157,7 +157,9 @@ public class FibonacciHeap
 	 */
 	public void delete(HeapNode x) 
 	{    
-		return; // should be replaced by student code
+		int delta = x.getKey()+1;
+		decreaseKey(x,delta);
+		deleteMin();
 	}
 
 	/**
