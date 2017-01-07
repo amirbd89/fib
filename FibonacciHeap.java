@@ -5,8 +5,8 @@
  */
 public class FibonacciHeap
 {
-	private HeapNode min;
-	private int numOfNodes=0;
+	private HeapNode min; //pointer to min. node in heap
+	private int numOfNodes=0; //num. of nodes in heap
 	/**
 	 * public boolean empty()
 	 *
@@ -79,7 +79,7 @@ public class FibonacciHeap
 	 */
 	public HeapNode findMin()
 	{
-		return new HeapNode();// should be replaced by student code
+		return this.min;// should be replaced by student code
 	} 
 
 	/**
@@ -90,7 +90,12 @@ public class FibonacciHeap
 	 */
 	public void meld (FibonacciHeap heap2)
 	{
-		return; // should be replaced by student code   		
+		if(heap2 == null)
+			return;
+		cat (min,heap2.findMin()); 
+		this.numOfNodes = this.numOfNodes+heap2.size();
+		if(this.min.getKey()>heap2.findMin().getKey())
+			this.min=heap2.findMin();
 	}
 
 	/**
@@ -101,7 +106,7 @@ public class FibonacciHeap
 	 */
 	public int size()
 	{
-		return 0; // should be replaced by student code
+		return numOfNodes; 
 	}
 
 	/**
