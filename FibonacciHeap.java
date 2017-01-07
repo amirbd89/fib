@@ -7,6 +7,17 @@ public class FibonacciHeap
 {
 	private HeapNode min; //pointer to min. node in heap
 	private int numOfNodes=0; //num. of nodes in heap
+	private static int numOfCuts=0;
+	private int marked = 0;
+	private int numOfTrees = 0;
+
+	public int getMarked(){
+		return marked;
+	}
+	public int getNumOfTrees(){
+		return this.numOfTrees;
+	}
+
 	/**
 	 * public boolean empty()
 	 *
@@ -28,8 +39,10 @@ public class FibonacciHeap
 	 */
 	public HeapNode insert(int key)
 	{    
+		// TODO - should I verify it's indeed a positive number?
 		HeapNode node = new HeapNode(key);
 		numOfNodes++;
+		numOfTrees++;
 		if(this.min == null){ 
 			this.min = node;
 			return node;
@@ -66,8 +79,14 @@ public class FibonacciHeap
 	 */
 	public void deleteMin()
 	{
-		return; // should be replaced by student code
-
+		int minDeg = min.getDegree(); 
+		numOfTrees+=minDeg;
+		HeapNode Right = min.
+		for(int i=0; i<minDeg; i++){
+			min.
+		}	
+		removeFromList(min);
+		cat()
 	}
 
 	/**
@@ -93,9 +112,12 @@ public class FibonacciHeap
 			return;
 		cat (min,heap2.findMin()); 
 		this.numOfNodes = this.numOfNodes+heap2.size();
+		this.numOfTrees += heap2.getNumOfTrees();
+		this.marked += heap2.getMarked();
 		if(this.min.getKey()>heap2.findMin().getKey())
 			this.min=heap2.findMin();
 	}
+
 
 	/**
 	 * public int size()
@@ -116,8 +138,15 @@ public class FibonacciHeap
 	 */
 	public int[] countersRep()
 	{
+		//TODO: Are all trees in heap some kind of a binomial tree (and ranked that way)?
 		int[] arr = new int[42];
-		return arr; //	 to be replaced by student code
+		
+		HeapNode currNode = min;
+		for(int i=0; i<numOfTrees; i++){
+			arr[i]+=currNode.getDegree();
+			currNode = currNode.getR();
+		}
+		return arr; 
 	}
 
 	/**
@@ -153,9 +182,17 @@ public class FibonacciHeap
 	 * cut as was studied in class
 	 */
 	private void cut(HeapNode x){
+		// I believe we never cut if x n the root list
+		// If we did cut it from the root list, then our
+		// count for numOfTrees is problemtic.
+		// That's because we assume here that x
+		// is added to the root list and therefor
+		// numOfTrees should be increased by 1
+		assert x.getP() != null;
 		removeFromList(x);
 		cat(this.min,x);
 		x.setMark(false);
+		numOfCuts++;
 	}
 
 	/**
@@ -213,7 +250,7 @@ public class FibonacciHeap
 	 */
 	public int potential() 
 	{    
-		return 0; // should be replaced by student code
+		return this.numOfTrees-2*this.marked;
 	}
 
 	/**
@@ -226,7 +263,7 @@ public class FibonacciHeap
 	 */
 	public static int totalLinks()
 	{    
-		return 0; // should be replaced by student code
+		return totalLinks; 
 	}
 
 	/**
@@ -237,7 +274,7 @@ public class FibonacciHeap
 	 */
 	public static int totalCuts()
 	{    
-		return 0; // should be replaced by student code
+		return numOfCuts;
 	}
 
 	/**
@@ -366,6 +403,10 @@ public class FibonacciHeap
 		 * @param mark the mark to set
 		 */
 		public void setMark(boolean mark) {
+			if(this.mark == false && mark == true)
+				marked++;
+			else if(this.mark == true && mark == false)
+				marked--;
 			this.mark = mark;
 		}
 		
