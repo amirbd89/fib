@@ -5,6 +5,7 @@
  */
 public class FibonacciHeap
 {
+	public static int totalLinks=0;
 	private HeapNode min; //pointer to min. node in heap
 	private int numOfNodes=0; //num. of nodes in heap
 	private static int numOfCuts=0;
@@ -79,14 +80,25 @@ public class FibonacciHeap
 	 */
 	public void deleteMin()
 	{
-		int minDeg = min.getDegree(); 
+		int minDeg = findMin().getDegree(); 
 		numOfTrees+=minDeg;
-		HeapNode Right = min.
-		for(int i=0; i<minDeg; i++){
-			min.
-		}	
+		HeapNode right = findMin().getR();
+		HeapNode child = findMin().getChild();
+		
+		/*for(int i=0; i<minDeg; i++){
+			findMin().
+		}	*/
 		removeFromList(min);
-		cat()
+		cat(right,child); //TODO: if any of them is null
+		Consolidate();
+	}
+	
+	
+	/**
+	 * perform consolidating/successive linking
+	 */
+	public void Consolidate(){
+	//TODO
 	}
 
 	/**
